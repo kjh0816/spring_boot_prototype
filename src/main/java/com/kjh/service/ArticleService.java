@@ -17,20 +17,29 @@ public class ArticleService {
 	@Autowired
 	private ArticleDao articleDao;
 
-	public int writeArticle(String title, String body) {
-		return articleDao.writeArticle(title, body);
+	public ResultData writeArticle(String title, String body) {
+		
+//		임시 데이터
+		int memberId = 1;
+		int boardId = 1;
+		
+		articleDao.writeArticle(memberId, boardId, title, body);
+		int id = articleDao.getLastInsertId();
+		
+		return new ResultData("S-1", id + "번 게시물이 생성되었습니다.", "id", id);
 	}
 
 	public Article getArticleById(int id) {
 		return articleDao.getArticleById(id);
+		
 	}
 
-	public ResultData delete(int id) {
-		return articleDao.delete(id);
+	public void delete(int id) {
+		articleDao.deleteArticle(id);
 	}
 
 	public ResultData modify(int id, String title, String body) {
-		return articleDao.modify(id, title, body);
+		Article article = getArticleById("")
 	}
 	
 	

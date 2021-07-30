@@ -31,11 +31,13 @@ public class MpaUsrArticleController {
 			return new ResultData("F-2", "내용 입력");
 		}
 		
-		int id = articleService.writeArticle(title, body);
 		
-		Article article = articleService.getArticleById(id);
 		
-		return new ResultData("S-1", id + "번 게시물이 생성되었습니다.", "article", article);
+		return articleService.writeArticle(title, body);
+		
+		
+		
+		
 	}
 	
 	
