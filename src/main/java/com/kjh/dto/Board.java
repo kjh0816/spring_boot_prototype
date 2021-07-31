@@ -1,22 +1,14 @@
 package com.kjh.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class Article {
+public class Board {
 	private int id;
 	private String regDate;
 	private String updateDate;
-	private int memberId;
-	private int boardId;
-	private String title;
-	private String body;
+	private String name;
+	private String code;
 	private boolean blindStatus;
 	private String blindDate;
 	private boolean delStatus;
@@ -25,5 +17,5 @@ public class Article {
 	private int repliesCount;
 	private int likeCount;
 	private int dislikeCount;
-
+	
 }
