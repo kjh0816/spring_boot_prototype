@@ -90,5 +90,11 @@ public class MpaUsrArticleController {
 	}
 	
 	
+	@RequestMapping("/mpaUsr/article/list")
+	public String showList() {
+		return "/mpaUsr/article/list";
+	}
+	
+	
 
 }
