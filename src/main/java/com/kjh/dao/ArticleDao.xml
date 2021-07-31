@@ -15,6 +15,13 @@
 	SELECT LAST_INSERT_ID()
 </select>
 
+<select id="getBoardById" resultType="Board">
+	SELECT B.*
+	FROM board AS B
+	WHERE B.id = #{boardId}
+	AND B.delStatus = 0
+</select>
+
 <insert id="writeArticle">
 	INSERT INTO article
 	SET regDate = NOW(),

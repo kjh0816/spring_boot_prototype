@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kjh.dao.ArticleDao;
 import com.kjh.dto.Article;
+import com.kjh.dto.Board;
 import com.kjh.dto.ResultData;
 import com.kjh.util.Util;
 
@@ -57,6 +58,10 @@ public class ArticleService {
 		
 		return new ResultData("S-1", id + "번 게시물이 수정되었습니다.");
 		
+	}
+
+	public Board getBoardById(int boardId) {
+		return articleDao.getBoardById(boardId);
 	}
 	
 	

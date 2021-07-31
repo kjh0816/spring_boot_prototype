@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.kjh.dto.Article;
+import com.kjh.dto.Board;
 
 @Mapper
 public interface ArticleDao {
@@ -23,5 +24,8 @@ public interface ArticleDao {
 
 
 	int getLastInsertId();
+
+
+	Board getBoardById(int boardId);
 
 }

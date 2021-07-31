@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kjh.dto.Article;
+import com.kjh.dto.Board;
 import com.kjh.dto.ResultData;
 import com.kjh.service.ArticleService;
 import com.kjh.util.Util;
@@ -91,7 +92,14 @@ public class MpaUsrArticleController {
 	
 	
 	@RequestMapping("/mpaUsr/article/list")
-	public String showList() {
+	public String showList(int boardId) {
+		
+		Board board = articleService.getBoardById(boardId);
+		if( board == null ) {
+			return "끼익";
+		}
+		
+		
 		return "/mpaUsr/article/list";
 	}
 	
