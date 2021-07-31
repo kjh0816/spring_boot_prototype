@@ -3,6 +3,8 @@ package com.kjh.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,12 +94,19 @@ public class MpaUsrArticleController {
 	
 	
 	@RequestMapping("/mpaUsr/article/list")
-	public String showList(int boardId) {
+	public String showList(HttpServletRequest req, Integer boardId) {
+		
+		if(Util.isEmpty(boardId)) {
+			return Util.msgAndReplace(req, "끼익", "/mpaUsr/home/main");
+		}
+		
 		
 		Board board = articleService.getBoardById(boardId);
 		if( board == null ) {
-			return "끼익";
+			return Util.msgAndReplace(req, "끼익", "/mpaUsr/home/main");
 		}
+		
+		req.setAttribute("board", board);
 		
 		
 		return "/mpaUsr/article/list";
