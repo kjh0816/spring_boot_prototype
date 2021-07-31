@@ -32,7 +32,7 @@ public class MpaUsrArticleController {
 		}
 		
 		
-		
+//		성공인 경우, ResultData 형식의 return 값을 Service에 위임하는 형태 : 일관성이 있을까
 		return articleService.writeArticle(title, body);
 		
 		

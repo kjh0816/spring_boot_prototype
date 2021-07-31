@@ -34,12 +34,29 @@ public class ArticleService {
 		
 	}
 
-	public void delete(int id) {
+	public ResultData delete(int id) {
+		
+		Article article = articleDao.getArticleById(id);
+		if(article == null) {
+			return new ResultData("F-1", id + "번 게시물이 존재하지 않습니다.");
+		}
+		
 		articleDao.deleteArticle(id);
+		return new ResultData("S-1", id + "번 게시물이 삭제되었습니다.");
+		
 	}
 
 	public ResultData modify(int id, String title, String body) {
-		Article article = getArticleById("")
+		
+		Article article = articleDao.getArticleById(id);
+		if(article == null) {
+			return new ResultData("F-1", id + "번 게시물이 존재하지 않습니다.");
+		}
+		
+		articleDao.modifyArticle(id, title, body);
+		
+		return new ResultData("S-1", id + "번 게시물이 수정되었습니다.");
+		
 	}
 	
 	
