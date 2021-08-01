@@ -65,15 +65,15 @@ public class ArticleService {
 	
 	}
 
-	public int getArticlesCount(int boardId) {
-		return articleDao.getArticlesCount(boardId);
+	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
+		return articleDao.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
 	}
 
-	public List<Article> getArticles(int boardId, int itemsCountInAPage, int page) {
+	public List<Article> getArticles(int boardId, int itemsCountInAPage, int page, String searchKeywordTypeCode, String searchKeyword) {
 		int limitFrom = (page - 1) * itemsCountInAPage;
 		int limitTake = itemsCountInAPage;
 
-		return articleDao.getArticles(boardId, limitFrom, limitTake);
+		return articleDao.getArticles(boardId, limitFrom, limitTake, searchKeywordTypeCode, searchKeyword);
 	}
 	
 	

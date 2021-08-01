@@ -4,63 +4,109 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kjh.dao.ArticleDao">
-<select id="getArticleById" resultType="Article">
-	SELECT A.*
-	FROM article AS A
-	WHERE A.id = #{id}
-	AND A.delStatus = 0
-</select>
+	<select id="getArticleById" resultType="Article">
+		SELECT A.*
+		FROM article AS
+		A
+		WHERE A.id = #{id}
+		AND A.delStatus = 0
+	</select>
 
-<select id="getLastInsertId" resultType="int">
-	SELECT LAST_INSERT_ID()
-</select>
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
 
-<select id="getBoardById" resultType="Board">
-	SELECT B.*
-	FROM board AS B
-	WHERE B.id = #{boardId}
-	AND B.delStatus = 0
-</select>
+	<select id="getBoardById" resultType="Board">
+		SELECT B.*
+		FROM board AS B
+		WHERE B.id = #{boardId}
+		AND B.delStatus = 0
+	</select>
 
-<select id="getArticlesCount" resultType="int">
-	SELECT COUNT(*) AS cnt
-	FROM article AS A
- 	WHERE A.boardId = #{boardId}
-	AND A.delStatus = 0
-</select>
+	<select id="getArticlesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article AS A
+		LEFT JOIN member AS M
+		ON M.id =
+		A.memberId
+		WHERE A.boardId = #{boardId}
+		AND A.delStatus = 0
+		<if test="searchKeyword != null">
+			<if test="searchKeywordTypeCode == 'titleAndBody'">
+				AND (
+				A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+				OR
+				A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+				)
+			</if>
+			<if test="searchKeywordTypeCode == 'title'">
+				AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchKeywordTypeCode == 'body'">
+				AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+		</if>
+	</select>
 
-<select id="getArticles" resultType="Article">
-	SELECT *
-	FROM article AS A
-	WHERE A.boardId = #{boardId}
-	ORDER BY A.id DESC
-	LIMIT #{limitFrom}, #{limitTake}
-</select>
+	<select id="getArticles" resultType="Article">
+		SELECT A.*,
+		M.nickname AS
+		extra__writerName
+		FROM article AS A
+		LEFT JOIN
+		member AS M
+		ON M.id =
+		A.memberId
+		WHERE A.boardId = #{boardId}
+		AND
+		A.delStatus = 0
+		<if test="searchKeyword != null">
+			<if test="searchKeywordTypeCode == 'titleAndBody'">
+				AND (
+				A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+				OR
+				A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+				)
+			</if>
+			<if test="searchKeywordTypeCode == 'title'">
+				AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchKeywordTypeCode == 'body'">
+				AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+		</if>
+		ORDER BY A.id
+		DESC
+		LIMIT #{limitFrom}, #{limitTake}
+	</select>
 
-<insert id="writeArticle">
-	INSERT INTO article
-	SET regDate = NOW(),
-	updateDate = NOW(),
-	memberId = #{memberId},
-	boardId = #{boardId},
-	title = #{title},
-	body = #{body}
-</insert>
+	<insert id="writeArticle">
+		INSERT INTO article
+		SET regDate = NOW(),
+		updateDate =
+		NOW(),
+		memberId = #{memberId},
+		boardId = #{boardId},
+		title = #{title},
+		body = #{body}
+	</insert>
 
-<update id="deleteArticle">
-	UPDATE article
-	SET delStatus = 1,
-	delDate = NOW()
-	WHERE id = #{id}
-</update>
+	<update id="deleteArticle">
+		UPDATE article
+		SET delStatus = 1,
+		delDate = NOW()
+		WHERE
+		id = #{id}
+	</update>
 
-<update id="modifyArticle">
-	UPDATE article
-	SET updateDate = NOW(),
-	title = #{title},
-	body = #{body}
-	WHERE id = #{id}
-</update>
+	<update id="modifyArticle">
+		UPDATE article
+		SET updateDate = NOW(),
+		title =
+		#{title},
+		body = #{body}
+		WHERE id = #{id}
+	</update>
 
 
 </mapper>

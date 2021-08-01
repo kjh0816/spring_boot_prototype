@@ -31,6 +31,7 @@ public class Article {
 	private Map<String, Object> extra;
 
     private String extra__writerName;
+    
 
     public String getBodyForPrint() {
         String bodyForPrint = body.replaceAll("\r\n", "<br>");

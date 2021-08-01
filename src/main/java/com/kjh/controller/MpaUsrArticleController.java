@@ -94,7 +94,8 @@ public class MpaUsrArticleController {
 	
 	
 	@RequestMapping("/mpaUsr/article/list")
-	public String showList(HttpServletRequest req, Integer boardId, @RequestParam(defaultValue = "1") int page) {
+	public String showList(HttpServletRequest req, Integer boardId, @RequestParam(defaultValue = "1") int page,
+			String searchKeywordTypeCode, String searchKeyword) {
 		
 		if(Util.isEmpty(boardId)) {
 			return Util.msgAndReplace(req, "끼익", "/mpaUsr/home/main");
@@ -106,12 +107,16 @@ public class MpaUsrArticleController {
 			return Util.msgAndReplace(req, "끼익", "/mpaUsr/home/main");
 		}
 		
+		if(Util.isEmpty(searchKeywordTypeCode)) {
+			searchKeywordTypeCode = "titleAndBody";
+		}
+		
 		
 		
 //		게시물 개수
-		int totalItemsCount = articleService.getArticlesCount(boardId);
+		int totalItemsCount = articleService.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
 		
-		
+//		게시물 개수를 알아야 현재 페이지에서 보여줘야할 게시물도 조회할 수 있기 때문에 위에 Count를 세는 함수는 필요하다.
 		
 //		페이징 (시작)
 		
@@ -123,7 +128,7 @@ public class MpaUsrArticleController {
 		int totalPage = (int) Math.ceil(totalItemsCount / (double) itemsCountInAPage);
 		
 //		현재 페이지에서 보여줄 게시물
-		List<Article> articles = articleService.getArticles(boardId, itemsCountInAPage, page);
+		List<Article> articles = articleService.getArticles(boardId, itemsCountInAPage, page, searchKeywordTypeCode, searchKeyword);
 		
 		
 		req.setAttribute("board", board);

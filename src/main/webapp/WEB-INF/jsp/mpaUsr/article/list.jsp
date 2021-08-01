@@ -25,16 +25,16 @@
                         <label class="label">
                             <span class="label-text">옵션</span>
                         </label>
-                        <select class="select select-bordered" name="searchKeywordType">
+                        <select class="select select-bordered" name="searchKeywordTypeCode">
                             <option value="titleAndBody">제목+내용</option>
                             <option value="title">제목</option>
                             <option value="body">내용</option>
                         </select>
                         <script>
-                            const param__searchKeywordType = '${param.searchKeywordType}';
-                            if (param__searchKeywordType.length > 0) {
-                                $('.search-form-box form [name="searchKeywordType"]')
-                                    .val('${param.searchKeywordType}');
+                            const param__searchKeywordTypeCode = '${param.searchKeywordTypeCode}';
+                            if (param__searchKeywordTypeCode.length > 0) {
+                                $('.search-form-box form [name="searchKeywordTypeCode"]')
+                                    .val('${param.searchKeywordTypeCode}');
                             }
                         </script>
                     </div>
@@ -170,7 +170,7 @@
 
 			<c:set var="uriBase" value="?boardId=${board.id}" />
 			<c:set var="uriBase"
-				value="${uriBase}&searchKeywordType=${param.searchKeywordType}" />
+				value="${uriBase}&searchKeywordTypeCodeCode=${param.searchKeywordTypeCode}" />
 			<c:set var="uriBase"
 				value="${uriBase}&searchKeyword=${param.searchKeyword}" />
 				
