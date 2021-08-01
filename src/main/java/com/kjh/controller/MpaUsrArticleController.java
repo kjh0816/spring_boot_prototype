@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kjh.dto.Article;
 import com.kjh.dto.Board;
 import com.kjh.dto.ResultData;
+import com.kjh.dto.Rq;
 import com.kjh.service.ArticleService;
 import com.kjh.util.Util;
 
@@ -21,24 +22,51 @@ public class MpaUsrArticleController {
 	
 	@Autowired
 	private ArticleService articleService;
-
+	
+	
+	
+	@RequestMapping("/mpaUsr/article/write")
+	public String showWrite(HttpServletRequest req, int boardId) {
+		
+		Board board = articleService.getBoardById(boardId);
+		if(board == null) {
+			return Util.msgAndBack(req, boardId + "번 게시판이 존재하지 않습니다.");
+		}
+		
+		req.setAttribute("board", board);
+		
+		return "/mpaUsr/article/write";
+	}
 	
 	@RequestMapping("/mpaUsr/article/doWrite")
-	@ResponseBody
-	public ResultData doWrite(String title, String body) {
+	
+	public String doWrite(HttpServletRequest req, int boardId, String title, String body) {
 		
 		if(Util.isEmpty(title)) {
-			return new ResultData("F-1", "제목 입력");
+			return Util.msgAndBack(req, "제목 입력");
 		}
 		if(Util.isEmpty(body)) {
-			return new ResultData("F-2", "내용 입력");
+			return Util.msgAndBack(req, "내용 입력");
 		}
 		
 		
-//		성공인 경우, ResultData 형식의 return 값을 Service에 위임하는 형태 : 일관성이 있을까
-		return articleService.writeArticle(title, body);
+		Rq rq = (Rq) req.getAttribute("rq");
 		
+//		int memberId = rq.getLoginedMemberId();
+//		임시 데이터
+		int memberId = 1;
 		
+		ResultData writeArticleRd = articleService.writeArticle(boardId, memberId, title, body);
+		
+//		필요없어서 뺐음.
+		
+//		if(writeArticleRd.isFail()) {
+//			return Util.msgAndBack(req, writeArticleRd.getMsg());
+//		}
+		
+		String replaceUri = "detail?id=" + writeArticleRd.getBody().get("id");
+		
+		return Util.msgAndReplace(req, writeArticleRd.getMsg(), replaceUri);
 		
 		
 	}

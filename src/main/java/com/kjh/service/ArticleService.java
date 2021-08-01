@@ -18,11 +18,9 @@ public class ArticleService {
 	@Autowired
 	private ArticleDao articleDao;
 
-	public ResultData writeArticle(String title, String body) {
+	public ResultData writeArticle(int boardId, int memberId, String title, String body) {
 		
-//		임시 데이터
-		int memberId = 1;
-		int boardId = 1;
+
 		
 		articleDao.writeArticle(memberId, boardId, title, body);
 		int id = articleDao.getLastInsertId();
