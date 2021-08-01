@@ -64,6 +64,10 @@ public class ArticleService {
 		return articleDao.getBoardById(boardId);
 	
 	}
+
+	public int getArticlesCount(Integer boardId) {
+		return articleDao.getArticlesCount(boardId);
+	}
 	
 	
 	
