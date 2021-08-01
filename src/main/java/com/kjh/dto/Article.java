@@ -1,5 +1,7 @@
 package com.kjh.dto;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +27,29 @@ public class Article {
 	private int repliesCount;
 	private int likeCount;
 	private int dislikeCount;
+	
+	private Map<String, Object> extra;
+
+    private String extra__writerName;
+
+    public String getBodyForPrint() {
+        String bodyForPrint = body.replaceAll("\r\n", "<br>");
+        bodyForPrint = bodyForPrint.replaceAll("\r", "<br>");
+        bodyForPrint = bodyForPrint.replaceAll("\n", "<br>");
+
+        return bodyForPrint;
+    }
+
+    public String getWriterProfileImgUri() {
+        return "/common/genFile/file/member/" + memberId + "/extra/profileImg/1";
+    }
+
+    public String getWriterProfileFallbackImgUri() {
+        return "https://via.placeholder.com/300?text=^_^";
+    }
+
+    public String getWriterProfileFallbackImgOnErrorHtmlAttr() {
+        return "this.src = '" + getWriterProfileFallbackImgUri() + "'";
+    }
 
 }

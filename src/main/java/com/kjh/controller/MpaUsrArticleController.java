@@ -130,6 +130,7 @@ public class MpaUsrArticleController {
 		req.setAttribute("totalItemsCount", totalItemsCount);
 		req.setAttribute("page", page);
 		req.setAttribute("totalPage", totalPage);
+		req.setAttribute("articles", articles);
 		
 		return "/mpaUsr/article/list";
 	}
