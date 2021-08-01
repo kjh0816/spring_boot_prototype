@@ -1,5 +1,7 @@
 package com.kjh.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,5 +32,8 @@ public interface ArticleDao {
 
 
 	int getArticlesCount(@Param("boardId") int boardId);
+
+
+	List<Article> getArticles(int boardId, int limitFrom, int limitTake);
 
 }

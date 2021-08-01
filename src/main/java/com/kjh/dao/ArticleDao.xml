@@ -29,6 +29,14 @@
 	AND A.delStatus = 0
 </select>
 
+<select id="getArticles" resultType="Article">
+	SELECT *
+	FROM article AS A
+	WHERE A.boardId = #{boardId}
+	ORDER BY A.id DESC
+	LIMIT #{limitFrom}, #{limitTake}
+</select>
+
 <insert id="writeArticle">
 	INSERT INTO article
 	SET regDate = NOW(),

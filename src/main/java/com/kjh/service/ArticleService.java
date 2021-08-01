@@ -65,8 +65,15 @@ public class ArticleService {
 	
 	}
 
-	public int getArticlesCount(Integer boardId) {
+	public int getArticlesCount(int boardId) {
 		return articleDao.getArticlesCount(boardId);
+	}
+
+	public List<Article> getArticles(int boardId, int itemsCountInAPage, int page) {
+		int limitFrom = (page - 1) * itemsCountInAPage;
+		int limitTake = itemsCountInAPage;
+
+		return articleDao.getArticles(boardId, limitFrom, limitTake);
 	}
 	
 	

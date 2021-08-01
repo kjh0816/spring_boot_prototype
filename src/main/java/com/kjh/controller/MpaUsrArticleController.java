@@ -1,6 +1,5 @@
 package com.kjh.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kjh.dto.Article;
@@ -94,7 +94,7 @@ public class MpaUsrArticleController {
 	
 	
 	@RequestMapping("/mpaUsr/article/list")
-	public String showList(HttpServletRequest req, Integer boardId) {
+	public String showList(HttpServletRequest req, Integer boardId, @RequestParam(defaultValue = "1") int page) {
 		
 		if(Util.isEmpty(boardId)) {
 			return Util.msgAndReplace(req, "끼익", "/mpaUsr/home/main");
@@ -106,11 +106,30 @@ public class MpaUsrArticleController {
 			return Util.msgAndReplace(req, "끼익", "/mpaUsr/home/main");
 		}
 		
-		req.setAttribute("board", board);
 		
+		
+//		게시물 개수
 		int totalItemsCount = articleService.getArticlesCount(boardId);
 		
+		
+		
+//		페이징 (시작)
+		
+//		한 페이지에 보여줄 게시물 수
+		int itemsCountInAPage = 10;
+		
+//		총 페이지 수
+		
+		int totalPage = (int) Math.ceil(totalItemsCount / (double) itemsCountInAPage);
+		
+//		현재 페이지에서 보여줄 게시물
+		List<Article> articles = articleService.getArticles(boardId, itemsCountInAPage, page);
+		
+		
+		req.setAttribute("board", board);
 		req.setAttribute("totalItemsCount", totalItemsCount);
+		req.setAttribute("page", page);
+		req.setAttribute("totalPage", totalPage);
 		
 		return "/mpaUsr/article/list";
 	}
