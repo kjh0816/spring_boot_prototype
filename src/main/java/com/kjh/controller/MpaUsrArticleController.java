@@ -72,20 +72,21 @@ public class MpaUsrArticleController {
 	}
 	
 	
-	@RequestMapping("/mpaUsr/article/getArticle")
-	@ResponseBody
-	public ResultData getArticle(int id) {
+	@RequestMapping("/mpaUsr/article/detail")
+	public String getArticle(HttpServletRequest req, int id) {
 		if(Util.isEmpty(id)) {
-			return new ResultData("F-1", "게시물 번호 입력");
+			return Util.msgAndBack(req, "게시물 번호 입력");
 		}
 		
 		Article article = articleService.getArticleById(id);
 		
 		if(article == null) {
-			return new ResultData("F-2", id + "번 게시물이 존재하지 않습니다.");
+			return Util.msgAndBack(req, id + "번 게시물이 존재하지 않습니다.");
 		}
 		
-		return new ResultData("S-1", id + "번 게시물입니다.", "article", article);
+		req.setAttribute("article", article);
+		
+		return "/mpaUsr/article/detail";
 	}
 	
 	@RequestMapping("/mpaUsr/article/doDelete")
